@@ -1,0 +1,505 @@
+<div role="game-body" data-id="{GAME_ID}" data-map="{MAP_ID}" style="height: 100vh; background-color: black;" unselectable="on" itemscope itemtype="http://schema.org/WebApplication">
+	<link itemprop="SoftwareApplicationCategory" href="http://schema.org/GameApplication">
+	<div id="preload-images">
+		<img class="hidden" src="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/correct-answer.png" onload="$(this).remove()" />
+		<img class="hidden" src="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/wrong-answer.png" onload="$(this).remove()" />
+		<img class="hidden" src="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/ohayou.png" onload="$(this).remove()" />
+	</div>
+
+	<div id="game-background" untouchable="on" class="noAlpha fadeIn animated" style="background-color: white; transition: opacity 1s; animation-delay: 2s;" role="game-screenshot-canvas">
+
+		<!-- canvas id="obj-Particles" data-object="Particles" role="Particles" class="noEvents" style="left: 0px; top: 0px; height: 600px;" data-index="false" data-particles="60"></canvas -->
+		<div id="obj-game-Filter" data-object="game-Filter" role="Filter" class="Filter noEvents" data-filter="Dream" style="max-height: 100vh !important; max-width: 100% !important;"></div>
+
+		<nav style="position: absolute; width: 100%; height: 100%;">
+			<canvas id="obj-game-bgs" class="absolute noEvents" style="animation-duration: 1.7s; height: 100vh; width: 960px; max-width: 100%; object-fit: contain; background-size: cover; background-image: url('{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/game-bgs.png');" data-encode="1" data-encode-type="2" width="960" height="1024" data-s="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/game-bgs.png"></canvas>
+
+			<canvas id="obj-game-Solar-Light" data-object="game-Solar-Light" role="Solar-Light" style="background-image: url('{ROOT_PATH}images/Eden/Resources/Object/solar_flareb.png'); position: absolute; pointer-events: none; z-index:1; left: 0px; top: 0px; left: unset; z-index: 100000;" width="720" height="500" data-encode="1" data-s="{ROOT_PATH}images/Eden/Resources/Object/solar_flareb.png" data-encode="1" data-encode-type="2" data-keyframe="solar-light"></canvas>
+		</nav>
+		<nav style="position: absolute; width: 100%; height: 100%;">
+		
+			<div id="game-lessons" class="animated fadeIn hide">
+				
+				<div id="game-photo-button" class="hide" data-html2canvas-ignore="true">
+					<span class="circle-button right button-bigger" style="border-width: 2px; margin: 2.5px auto; background-color: rgba(255, 255, 255, 0.75); border-width: 2px;">
+						<i class="icon icon-photo2 noEvents" style="margin: -11px 0px 0px -1px; transform: scale(.85);"></i>
+					</span>
+				</div>
+
+				<div id="share-control-{GAME_ID}" role="game-share-button" data-html2canvas-ignore="true">
+					<span class="circle-button right button-bigger"  style="border-width: 2px; margin: 2.5px auto; background-color: rgba(22, 28, 56, .75); border-width: 2px;" role="menu-box" data-param='{"id":"options-box","title":"{L_SHARE}","trgt":"#options-box .ui-dialog-message","role":"share-game-control-{GAME_ID}","append":"#share-control-{GAME_ID}"}'>
+						<i class="icon icon-share noEvents" style="margin: -11px 0px 0px -1px; transform: scale(.85); top: -55px;"></i>
+					</span>
+					<div class="wrapper" style="display: none; padding-top: 10px;" role="share-game-control-{GAME_ID}">
+					<ul class="logout-box" style="display: block; padding-bottom: 15px;">
+						<nav style="display: block; padding: 10px 10px 20px;">
+							<label style="width: 100px; text-align: right;">{L_URL}</label>
+							<input type="text" value="{U_GAME}" readonly="true" role="clip-text" class="button-clip hand" data-mode="text" data-text="{U_GAME}" />
+						</nav>
+						<li class="facebook" style="margin: 0 14px 20px;">
+							<a id="fb-share-{GAME_ID}" type="icon_link" href="javascript:$.popUp('http://www.facebook.com/sharer.php?u={U_GAME}&picture={GAME_IMG}&title={GAME_NAME}&caption={BOARD_URL}&app_id={GAME_FBID}');" style="height: 0px; padding: 0px;">
+								<i class="fab fa-facebook fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+
+						<li class="twitter" style="margin: 0 14px 20px;">
+							<a id="tw-share-{GAME_ID}" type="icon_link"													
+							href="javascript:$.popUp('https://twitter.com/intent/tweet?hashtags={MOSHA_HASHTAG}&original_referer={BOARD_URL}&text={GAME_WHATSAPP}&via={MOSHA_TWITTER}');" style="height: 0px; padding: 0px;">
+								<i class="fab fa-twitter fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+
+						<li class="whatsapp" style="margin: 0 14px 20px;">
+							<a id="wa-share-{GAME_ID}" type="icon_link"													
+							href="javascript:$.popUp('https://wa.me/?text={GAME_WHATSAPP}');" data-action="share/whatsapp/share" style="height: 0px; padding: 0px;">
+								<i class="fab fa-whatsapp fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+
+						<li class="pinterest" style="margin: 0 14px 20px;">
+							<a id="pn-share-{GAME_ID}" type="icon_link"													
+							href="javascript:$.popUp('http://pinterest.com/pin/create/button/?url={U_GAME}&media={GAME_IMG}&description={GAME_WHATSAPP}');" style="height: 0px; padding: 0px;">
+								<img border="0" src="{GAME_IMG}" class="hidden" />
+								<i class="fab fa-pinterest fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+
+
+						<li class="reddit" style="margin: 0 14px 20px;">
+							<a id="rd-share-{GAME_ID}" type="icon_link"													
+							href="javascript:$.popUp('https://www.reddit.com/r/gaming/submit?url={U_GAME}&resubmit=true&title={GAME_NAME}&image={GAME_IMG}');" style="height: 0px; padding: 0px;">
+								<i class="fab fa-reddit fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+
+						<li class="linkedin" style="margin: 0 14px 20px;">
+							<a id="in-share-{GAME_ID}" type="icon_link"													
+							href="javascript:$.popUp('https://www.linkedin.com/shareArticle?mini=true&url={U_GAME}&title={GAME_NAME}&summary={GAME_DESC}&source=MoshaOnline');" style="height: 0px; padding: 0px;">
+								<i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+
+						<li class="google" style="margin: 0 14px 20px;">
+							<a id="gl-share-{GAME_ID}" type="icon_link"													
+							href="javascript:$.popUp('https://www.google.com/bookmarks/mark?op=edit&bkmk={U_GAME}&title={GAME_NAME}&annotation={GAME_DESC}&labels=MoshaOnline');" style="height: 0px; padding: 0px;">
+								<i class="fab fa-google fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+						
+						<li class="sms mobile" style="margin: 0 14px 20px;">
+							<a id="in-share-{GAME_ID}" type="icon_link"													
+							href="sms:?body={GAME_WHATSAPP}" style="height: 0px; padding: 0px;">
+								<i class="fab fa-sms mobile fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+
+						<li class="gmail" style="margin: 0 14px 20px;">
+							<a id="in-share-{GAME_ID}" type="icon_link"													
+							href="javascript:$.popUp('https://mail.google.com/mail/?view=cm&su={GAME_NAME}&body={GAME_WHATSAPP}');" style="height: 0px; padding: 0px;">
+								<i class="fab fa-envelope fa-2x" aria-hidden="true"></i>
+							</a>
+						</li>
+
+						<li style="display: none;"></li>
+					</ul>
+					</div>
+
+				</div>
+
+				<div id="game-control-settings" data-html2canvas-ignore="true">
+					<!-- span class="circle-button right button-bigger" role="menu-box"  data-param='{"id":"options-box","title":"{L_OPTIONS}","trgt":"#options-box .ui-dialog-message","role":"game-box-control-{GAME_ID}","append":"#game-control-settings"}' style="border-width: 2px; margin: 2.5px auto; background-color: #585655; border-width: 2px;" -->
+					<span class="circle-button right button-bigger" role="logout-box" data-param='{"id":"logout-box","title":"Settings","trgt":"#logout-box .ui-dialog-message","role":"logout-box-control","append":"#header-wrap"}' style="border-width: 2px; margin: 2.5px auto; background-color: #585655; border-width: 2px;">
+						<i class="icon icon-settings noEvents" style="margin: -11px 0px 0px -1px; transform: scale(.85);"></i>
+					</span>
+
+					<!-- ul class="logout-box" role="game-box-control-{GAME_ID}">
+						<li>
+							<a href="https://moshaonline.com/game={GAME_ID}" role="clip-text" class="button-clip hand" data-mode="text" data-text="https://moshaonline.com/game={GAME_ID}" itemprop="url" style="padding: 7px 10px;">
+								<span class="button-wrapper" style="margin-right: 7px;">
+									<i class="icon icon-link" style="margin: 0 0 3px 1px;"></i>
+								</span>
+								<span role="link-url">{L_COPY_GAME}</span>
+							</a>
+						</li>
+						<li>
+							<a nohref class="hand" role="exit-game" style="padding: 7px 10px;">
+								<span class="button-wrapper" style="margin-right: 7px;">
+									<i class="icon icon-close" style="margin-bottom: 4px; filter: invert(1); margin-left: 3px;"></i>
+								</span>
+								<span>{L_CLOSE}</span>
+							</a>
+						</li>
+					</ul -->
+				</div>
+
+				<div id="game-select-screen" class="game-select-screen">
+
+					<div class="lesson-selector" style="width: auto; height: 75px; text-align: center; display: block;">
+						<span class="center noEvents strong" style="font-size: 1.5em; color: #FEAD4E; animation-duration: 1.66s;margin-top: 8px; display: inline-block; width: 115px; max-width: 115px; white-space: nowrap;">{L_FIRST_LESSON}
+					</span>
+					
+					<div id="lesson-selector-carrousel">
+
+						<div class="circle-button go-left hide" role="carrousel-navi" data-direction="left" style="display: none;"><i class="icon-playmusic flipH" style="margin-left: -4px; margin-top: -7px;"></i></div>
+						<div class="circle-button go-right hide" role="carrousel-navi" data-direction="right" style="display: none;"><i class="icon-playmusic" style="margin-top: -7px;"></i></div>
+
+						<div data-index="1" role="carrousel-frame" class="active">
+
+							<!-- IF S_USER_LOGGED_IN -->
+								<!-- BEGIN user_bestscores -->
+									<!-- IF user_bestscores.LESSON_ID == 1 -->
+									<div class="absolute highest-score-build">
+										<div class="score-group" data-lesson="{user_bestscores.LESSON_ID}">
+											
+											<span data-lesson="1" role="highest-score-track" class="highest-score-track" data-total="{user_bestscores.HIGHEST_SCORE}">
+												{user_bestscores.HIGHEST_SCORE_FORMAT}
+												<!-- IF user_bestscores.HIGHEST_SCORE >= 10 -->
+												<i class="icon icon-game-stars" style="vertical-align: bottom;"></i>
+												<!-- ENDIF -->
+											</span>
+																			
+											<span role="highest-second-track" class="highest-second-track" data-total="{user_bestscores.HIGHEST_SECOND}" style="margin-right: 35px;">
+												{user_bestscores.HIGHEST_SECOND} 
+											</span>
+
+											<!-- IF IS_PLACE_PLAYER == 1 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-gold" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE IF IS_PLACE_PLAYER == 2 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-silver" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE IF IS_PLACE_PLAYER == 3 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-bronze" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE -->
+											<span>{IS_PLACE_PLAYER}</span>
+											<!-- ENDIF -->
+
+										</div>
+									</div>
+									<!-- ENDIF -->
+								<!-- END user_bestscores -->
+							<!-- ENDIF -->					
+
+							<img class="lesson" role="start-lesson" data-id="1" style="animation-duration: 1.5s;  margin: 15px auto 0px; text-align: center; width: 100%; max-width: 290px; max-height: 95px; object-fit: cover;" src="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/lesson1.png" />
+
+							<div data-id="1" class="top-scores">
+								<span class="center noEvents strong" style="font-size: 1.2em; color: #FEAD4E; animation-duration: 1.66s; display: block;">{L_TOP_SCORES}</span>
+								<!-- BEGIN best_scoresi -->
+
+									<!-- IF best_scoresi.LESSON_ID == 1 -->
+
+										<!-- IF best_scoresi.INDEXA <= 3 -->
+										<div class="avatar-top-score comment-avatar {best_scoresi.PROFILE_GENDER_CLASS}" data-score="{best_scoresi.PROFILE_SCORE}" data-second="{best_scoresi.PROFILE_SECOND}" style="<!-- IF best_scoresi.INDEXA == 1 -->margin-left: 0px;<!-- ENDIF -->">
+											<!-- IF S_APP -->
+											<a  id="profile-{best_scoresi.PROFILE_ID}" href="{best_scoresi.PROFILE_USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"app":1,"username": "{best_scoresi.PROFILE_USERNAME_CLEAN}"},"mode":"{best_scoresi.PROFILE_USERNAME_CLEAN}","trgt":"#content","pop":1,"popID":"profile-viewer","hideH":1,"title":"{L_PROFILE}"}'>
+												<img src="{best_scoresi.PROFILE_FACEAVATAR}" data-user="{best_scoresi.PROFILE_ID}" role="user-avatar" data-type="face" class="button-bigger">
+												<span class="avatar-score-name">{best_scoresi.PROFILE_USERNAME}</span>
+											</a>
+											<!-- ELSE -->
+											<a id="profile-{best_scoresi.PROFILE_ID}" href="{best_scoresi.PROFILE_USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"username": "{best_scoresi.PROFILE_USERNAME_CLEAN}"},"mode":"{best_scoresi.PROFILE_USERNAME_CLEAN}","trgt":"#content"}'>
+											<img src="{best_scoresi.PROFILE_FACEAVATAR}" data-user="{best_scoresi.PROFILE_ID}" role="user-avatar" data-type="face" class="button-bigger">
+											</a>
+											<!-- ENDIF -->
+											<span class="avatar-current-score" style="color: white; text-shadow: none;">Score: {best_scoresi.PROFILE_SCORE}									
+												<!-- IF best_scoresi.PROFILE_SCORE >= 10 -->
+												<i class="icon icon-game-stars" style="position: absolute; margin-top: -3px;"></i>
+												<!-- ENDIF -->
+											</span>
+
+											<!-- IF best_scoresi.INDEXA == 1 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-gold" style="margin: 0 5px;"></i></span>
+											<!-- ELSE IF best_scoresi.INDEXA == 2 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-silver" style="margin: 0 5px;"></i></span>
+											<!-- ELSE IF best_scoresi.INDEXA == 3 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-bronze" style="margin: 0 5px;"></i></span>
+											<!-- ELSE -->
+											<!-- ENDIF -->
+
+											<span class="avatar-top-grade" style="color: white; font-weight: bold; margin-top: 55px; position: absolute;">{best_scoresi.PROFILE_SECOND}</span>
+										</div>
+										<!-- ENDIF -->
+									<!-- ENDIF -->
+
+								<!-- END best_scoresi -->
+							</div>
+						</div>
+
+						<div data-index="2" role="carrousel-frame" class="">
+
+							<!-- IF S_USER_LOGGED_IN -->
+								<!-- BEGIN user_bestscores -->
+									<!-- IF user_bestscores.LESSON_ID == 2 -->
+									<div class="absolute highest-score-build">
+										<div class="score-group" data-lesson="{user_bestscores.LESSON_ID}">
+											
+											<span data-lesson="2" role="highest-score-track" class="highest-score-track" data-total="{user_bestscores.HIGHEST_SCORE}">
+												{user_bestscores.HIGHEST_SCORE_FORMAT}
+												<!-- IF user_bestscores.HIGHEST_SCORE >= 10 -->
+												<i class="icon icon-game-stars" style="vertical-align: bottom;"></i>
+												<!-- ENDIF -->
+											</span>
+																			
+											<span role="highest-second-track" class="highest-second-track" data-total="{user_bestscores.HIGHEST_SECOND}" style="margin-right: 35px;">
+												{user_bestscores.HIGHEST_SECOND} 
+											</span>
+
+											<!-- IF IS_PLACE_PLAYER == 1 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-gold" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE IF IS_PLACE_PLAYER == 2 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-silver" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE IF IS_PLACE_PLAYER == 3 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-bronze" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE -->
+											<span>{IS_PLACE_PLAYER}</span>
+											<!-- ENDIF -->
+
+										</div>
+									</div>
+									<!-- ENDIF -->
+								<!-- END user_bestscores -->
+							<!-- ENDIF -->
+
+							<img class="lesson"  role="start-lesson" data-id="2" style="animation-duration: 1.5s;  margin: 15px auto 0px; text-align: center; width: 100%; max-width: 290px; max-height: 95px; object-fit: cover;" src="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/lesson2.png" />
+
+
+							<div data-id="2" class="top-scores">
+								<span class="center noEvents strong" style="font-size: 1.2em; color: #FEAD4E; animation-duration: 1.66s; display: block;">{L_TOP_SCORES}</span>
+								<!-- BEGIN best_scoresi -->
+
+									<!-- IF best_scoresi.LESSON_ID == 2 -->
+
+										<!-- IF best_scoresi.INDEXB <= 3 -->
+										<div class="avatar-top-score comment-avatar {best_scoresi.PROFILE_GENDER_CLASS}" data-score="{best_scoresi.PROFILE_SCORE}" data-second="{best_scoresi.PROFILE_SECOND}" style="<!-- IF best_scoresi.INDEXB == 1 -->margin-left: 0px;<!-- ENDIF -->">
+											<!-- IF S_APP -->
+											<a  id="profile-{best_scoresi.PROFILE_ID}" href="{best_scoresi.PROFILE_USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"app":1,"username": "{best_scoresi.PROFILE_USERNAME_CLEAN}"},"mode":"{best_scoresi.PROFILE_USERNAME_CLEAN}","trgt":"#content","pop":1,"popID":"profile-viewer","hideH":1,"title":"{L_PROFILE}"}'>
+												<img src="{best_scoresi.PROFILE_FACEAVATAR}" data-user="{best_scoresi.PROFILE_ID}" role="user-avatar" data-type="face" class="button-bigger">
+												<span class="avatar-score-name">{best_scoresi.PROFILE_USERNAME}</span>
+											</a>
+											<!-- ELSE -->
+											<a id="profile-{best_scoresi.PROFILE_ID}" href="{best_scoresi.PROFILE_USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"username": "{best_scoresi.PROFILE_USERNAME_CLEAN}"},"mode":"{best_scoresi.PROFILE_USERNAME_CLEAN}","trgt":"#content"}'>
+											<img src="{best_scoresi.PROFILE_FACEAVATAR}" data-user="{best_scoresi.PROFILE_ID}" role="user-avatar" data-type="face" class="button-bigger">
+											</a>
+											<!-- ENDIF -->
+											<span class="avatar-current-score" style="color: white; text-shadow: none;">Score: {best_scoresi.PROFILE_SCORE}									
+												<!-- IF best_scoresi.PROFILE_SCORE >= 10 -->
+												<i class="icon icon-game-stars" style="position: absolute; margin-top: -3px;"></i>
+												<!-- ENDIF -->
+											</span>
+
+											<!-- IF best_scoresi.INDEXB == 1 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-gold" style="margin: 0 5px;"></i></span>
+											<!-- ELSE IF best_scoresi.INDEXB == 2 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-silver" style="margin: 0 5px;"></i></span>
+											<!-- ELSE IF best_scoresi.INDEXB == 3 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-bronze" style="margin: 0 5px;"></i></span>
+											<!-- ELSE -->
+											<!-- ENDIF -->
+
+											<span class="avatar-top-grade" style="color: white; font-weight: bold; margin-top: 55px; position: absolute;">{best_scoresi.PROFILE_SECOND}</span>
+										</div>
+										<!-- ENDIF -->
+									<!-- ENDIF -->
+
+								<!-- END best_scoresi -->
+							</div>
+
+
+						</div>
+
+						<div data-index="3" role="carrousel-frame" class="">
+
+							<!-- IF S_USER_LOGGED_IN -->
+									<div class="absolute highest-score-build">
+										<div class="score-group" data-lesson="{user_bestscores.LESSON_ID}">
+
+										<!-- BEGIN user_bestscores -->
+											<!-- IF user_bestscores.LESSON_ID == 3 -->
+											
+											<span data-lesson="3" role="highest-score-track" class="highest-score-track" data-total="{user_bestscores.HIGHEST_SCORE}">
+												{user_bestscores.HIGHEST_SCORE_FORMAT}
+												<!-- IF user_bestscores.HIGHEST_SCORE >= 10 -->
+												<i class="icon icon-game-stars" style="vertical-align: bottom;"></i>
+												<!-- ENDIF -->
+											</span>
+																			
+											<span role="highest-second-track" class="highest-second-track" data-total="{user_bestscores.HIGHEST_SECOND}" style="margin-right: 35px;">
+												{user_bestscores.HIGHEST_SECOND} 
+											</span>
+
+											<!-- IF IS_PLACE_PLAYER == 1 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-gold" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE IF IS_PLACE_PLAYER == 2 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-silver" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE IF IS_PLACE_PLAYER == 3 -->
+											<span class="strong top-score-trophy mine"><i class="icon trophy-bronze" style="margin-top: -28px; margin-left: -28px; position: absolute;"></i></span>
+											<!-- ELSE -->
+											<span>{IS_PLACE_PLAYER}</span>
+											<!-- ENDIF -->
+
+											<!-- ENDIF -->
+										<!-- END user_bestscores -->
+
+										</div>
+									</div>
+							<!-- ENDIF -->
+
+							<img class="lesson"  role="start-lesson" data-id="3" style="animation-duration: 1.5s;  margin: 15px auto 0px; text-align: center; width: 100%; max-width: 290px; max-height: 95px; object-fit: cover;" src="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/lesson3.png" />
+
+
+							<div data-id="3" class="top-scores">
+								<span class="center noEvents strong" style="font-size: 1.2em; color: #FEAD4E; animation-duration: 1.66s; display: block;">{L_TOP_SCORES}</span>
+								<!-- BEGIN best_scoresi -->
+
+									<!-- IF best_scoresi.LESSON_ID == 3 -->
+
+										<!-- IF best_scoresi.INDEXC <= 3 -->
+										<div class="avatar-top-score comment-avatar {best_scoresi.PROFILE_GENDER_CLASS}" data-score="{best_scoresi.PROFILE_SCORE}" data-second="{best_scoresi.PROFILE_SECOND}" style="<!-- IF best_scoresi.INDEXC == 1 -->margin-left: 0px;<!-- ENDIF -->">
+											<!-- IF S_APP -->
+											<a  id="profile-{best_scoresi.PROFILE_ID}" href="{best_scoresi.PROFILE_USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"app":1,"username": "{best_scoresi.PROFILE_USERNAME_CLEAN}"},"mode":"{best_scoresi.PROFILE_USERNAME_CLEAN}","trgt":"#content","pop":1,"popID":"profile-viewer","hideH":1,"title":"{L_PROFILE}"}'>
+												<img src="{best_scoresi.PROFILE_FACEAVATAR}" data-user="{best_scoresi.PROFILE_ID}" role="user-avatar" data-type="face" class="button-bigger">
+												<span class="avatar-score-name">{best_scoresi.PROFILE_USERNAME}</span>
+											</a>
+											<!-- ELSE -->
+											<a id="profile-{best_scoresi.PROFILE_ID}" href="{best_scoresi.PROFILE_USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"username": "{best_scoresi.PROFILE_USERNAME_CLEAN}"},"mode":"{best_scoresi.PROFILE_USERNAME_CLEAN}","trgt":"#content"}'>
+											<img src="{best_scoresi.PROFILE_FACEAVATAR}" data-user="{best_scoresi.PROFILE_ID}" role="user-avatar" data-type="face" class="button-bigger">
+											</a>
+											<!-- ENDIF -->
+											<span class="avatar-current-score" style="color: white; text-shadow: none;">Score: {best_scoresi.PROFILE_SCORE}									
+												<!-- IF best_scoresi.PROFILE_SCORE >= 10 -->
+												<i class="icon icon-game-stars" style="position: absolute; margin-top: -3px;"></i>
+												<!-- ENDIF -->
+											</span>
+
+											<!-- IF best_scoresi.INDEXC == 1 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-gold" style="margin: 0 5px;"></i></span>
+											<!-- ELSE IF best_scoresi.INDEXC == 2 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-silver" style="margin: 0 5px;"></i></span>
+											<!-- ELSE IF best_scoresi.INDEXC == 3 -->
+											<span class="strong top-score-trophy"><i class="icon trophy-bronze" style="margin: 0 5px;"></i></span>
+											<!-- ELSE -->
+											<!-- ENDIF -->
+
+											<span class="avatar-top-grade" style="color: white; font-weight: bold; margin-top: 55px; position: absolute;">{best_scoresi.PROFILE_SECOND}</span>
+										</div>
+										<!-- ENDIF -->
+									<!-- ENDIF -->
+
+								<!-- END best_scoresi -->
+							</div>
+
+
+						</div>
+
+
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="game-end-screen" class="hide">
+
+				<div id="game-end-message" class="game-end-message center noEvents strong" style="font-size: 1.5em; color: white; animation-duration: 1.66s;">
+					<span class="center noEvents strong hide" role="game-congratulations" data-role="game-end-message" style="color: #FEAD4E; animation-duration: 1.66s;">{L_CONGRATULATIONS}</span>
+					<span class="center noEvents strong hide" role="game-failed" data-role="game-end-message" style="color: #FF6699; animation-duration: 1.66s;">{L_FAILED}</span>
+					
+					<div class="game-end-lesson hide" data-id="1" style="animation-duration: 1.5s;  margin: 15px auto 0px; text-align: center; width: 100%; max-width: 290px; max-height: 95px; object-fit: cover; background-image: url('{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/lesson1.png'); height: 45px; margin: 0 auto; background-position: 50% -25px;" />
+					<div class="game-end-lesson hide" data-id="2" style="animation-duration: 1.5s;  margin: 15px auto 0px; text-align: center; width: 100%; max-width: 290px; max-height: 95px; object-fit: cover; background-image: url('{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/lesson2.png'); height: 45px; margin: 0 auto; background-position: 50% -25px;" />
+					<div class="game-end-lesson hide" data-id="3" style="animation-duration: 1.5s;  margin: 15px auto 0px; text-align: center; width: 100%; max-width: 290px; max-height: 95px; object-fit: cover;; background-image: url('{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/lesson3.png'); height: 45px; margin: 0 auto; background-position: 50% -25px;" />
+
+					<span class="see-profile target button-bigger block center" role="start-game" data-id="{GAME_ID}" style="color: white; pointer-events: fill; margin: 0 auto; margin-top: 0px !important;">{L_TRY_AGAIN}</span>
+				</div>
+
+				<div id="best-scores" class="best-scores hide" style="animation-delay: .5s;">
+
+					<div class="avatar-score comment-avatar {USER_GENDER_CLASS} mine" style="margin-top: 0px; position: fixed; margin-left: 150px; overflow: visible; left: 0px;">
+						<!-- IF S_APP -->
+						<a  id="profile-{USER_ID}" href="{USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"app":1,"username": "{USERNAME_CLEAN}"},"mode":"{USERNAME_CLEAN}","trgt":"#content","pop":1,"popID":"profile-viewer","hideH":1,"title":"{L_PROFILE}"}'>
+							<img src="{USER_FACEAVATAR}" data-user="{USER_ID}" role="user-avatar" data-type="face" class="button-bigger">
+							<span class="avatar-score-name">{USERNAME}</span>
+						</a>
+						<!-- ELSE -->
+						<a id="profile-{USER_ID}" href="{USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"username": "{USERNAME_CLEAN}"},"mode":"{USERNAME_CLEAN}","trgt":"#content"}'>
+						<img src="{USER_FACEAVATAR}" data-user="{USER_ID}" role="user-avatar" data-type="face" class="button-bigger">
+						</a>
+						<!-- ENDIF -->
+						<span class="avatar-current-score mine" style="font-size: 1.5em">Score: <i class="icon icon-game-stars hide" role="game-icon-starred"></i><span role="final-score">0</span> Grade: <span role="final-grade">0</span></span>
+					</div>
+
+					<nav style="width: {TOTAL_WIDTH}px; position: relative;">
+					<!-- BEGIN best_scores -->
+						<div class="avatar-score comment-avatar {best_scores.PROFILE_GENDER_CLASS}" data-score="{best_scores.PROFILE_SCORE}" data-second="{best_scores.PROFILE_SECOND}" data-lesson="{best_scores.LESSON_ID}">
+							<!-- IF S_APP -->
+							<a  id="profile-{best_scores.PROFILE_ID}" href="{best_scores.PROFILE_USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"app":1,"username": "{best_scores.PROFILE_USERNAME_CLEAN}"},"mode":"{best_scores.PROFILE_USERNAME_CLEAN}","trgt":"#content","pop":1,"popID":"profile-viewer","hideH":1,"title":"{L_PROFILE}"}'>
+								<img src="{best_scores.PROFILE_FACEAVATAR}" data-user="{best_scores.PROFILE_ID}" role="user-avatar" data-type="face" class="button-bigger">
+								<span class="avatar-score-name">{best_scores.PROFILE_USERNAME}</span>
+							</a>
+							<!-- ELSE -->
+							<a id="profile-{best_scores.PROFILE_ID}" href="{best_scores.PROFILE_USERNAME_CLEAN}" data-link='{"parent":"profile","param":{"username": "{best_scores.PROFILE_USERNAME_CLEAN}"},"mode":"{best_scores.PROFILE_USERNAME_CLEAN}","trgt":"#content"}'>
+							<img src="{best_scores.PROFILE_FACEAVATAR}" data-user="{best_scores.PROFILE_ID}" role="user-avatar" data-type="face" class="button-bigger">
+							</a>
+							<!-- ENDIF -->
+							<span class="avatar-current-score">Score: {best_scores.PROFILE_SCORE} Grade: {best_scores.PROFILE_SECOND}</span>
+						</div>
+					<!-- END best_scores -->
+					</nav>
+
+				</div>
+
+			</div>
+		</nav>
+
+		<div id="teacher-seika" class="absolute " style="text-align: center; left: 50%; top: 50%; z-index: 1000; max-width: 400px; width: 100%; height: 100%; max-height: 50vh;">
+			<nav class="block noEvents">			
+				<div class="animated infinite breath block noEvents">
+
+				<canvas id="obj-TSeika" role="Object" class="absolute animated fadeIn target" style="animation: teacher_seika 5s steps(1, start) infinite; max-width: 400px; object-fit: contain; background-image: url('{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/Seika_sprite.png'); -webkit-filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5)); max-height: 50vh; background-position: -400px 0px; height: 100vh; left: 0px;" data-encode="1" data-encode-type="2" width="2000" height="647" data-s="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/Seika_sprite.png"></canvas>
+				<!-- canvas id="obj-TSeika" role="Object" class="absolute noEvents" style="max-width: 200px; object-fit: contain; background-image: url('{T_RESOURCES_PATH}Object/Teacher_Seika.png'); animation: teacher_seika 2s steps(5,end) alternate forwards infinite; -webkit-filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5)); height: 200px;" data-encode="1" data-encode-type="2" width="1800" height="200" data-s="{T_RESOURCES_PATH}Object/Teacher_Seika.png"></canvas -->
+				</div>
+			</nav>
+		</div>
+
+		<div class="avatar-name npc-name hide target" role="game-npc-talk" style="transform-origin: 300% 50%;" data-html2canvas-ignore="true">{L_TALK_TO} Mimi Ashura</div>
+
+		<!-- IF HAS_CHAR -->
+		<div class="avatar-name npc-name hide target" role="game-backto" style="transform-origin: 300% 50%; bottom: 50px;" data-html2canvas-ignore="true">
+			
+			<a role="start-mosha" data-status="1" data-title="Babel Shopping District" style="left: 2.5px; top: -10px; max-width: 40px; max-height: 40px;line-height: 40px;">
+				<span id="link-1212" role="link-play" data-id="1212" data-user="{USER_ID}" data-type="canvas" data-map-name="Babel Shopping District" data-x="4025px" data-y="-170px" nohref="" data-nopush="" data-link='{"parent":"play","trgt":".mosha-container","bpreCall":"loadPlay","call":"startPlay","removeData":true,"closeOverlay":false,"title":"Mosha Online","popID":"mosha-viewer-1212","pop":"1","dialogClass":"mosha-online","width":960,"param":{"map_id":1212},"hideH":1,"closeOnEscape":false}' class="noEvents">
+					{L_BACK_TO} Mosha Online
+				</span>
+			</a>
+
+		</div>
+		<!-- ENDIF -->
+
+		<!-- canvas id="obj-game-desk" class="absolute noEvents" style="height: 100vh; width: 960px; z-index: 1000; max-width: 100%; object-fit: contain; background-size: cover; background-image: url('{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/game-desk.png');" data-encode="1" data-encode-type="2" width="960" height="1024" data-s="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/game-desk.png"></canvas -->
+	</div>
+
+	<!-- IF SHOW_ADS -->
+		<div class="comment-table game-ads" style="max-width: 730px;position: absolute; left: 50%; transform: translateX(-50%); display: none;">
+			<div class="comment-body">
+				<div class="comment-text">
+					<div id="moshaonline-com_728x90" role="dashboard/adin" style="margin-left: -15px;">
+						<img src="{SPRITE}" title="adin" width="1" height="1" onload="aiptag.cmd.display.push(function() { aipDisplayTag.display('moshaonline-com_728x90'); });" />
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- ENDIF -->
+
+	<div id="start-screen">
+
+		<div class="noEvents animated fadeIn" untouchable="on" style="min-height: 50vh; animation-delay: 1s;">
+			<img class="" style="animation-duration: .66s; position: absolute; top: 50px; left: 50%; transform: translateX(-50%);" src="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/game_logo512x512.png" />
+			<!-- img role="subtitle-game" src="{T_TEMPLATE_PATH}/Play/games/{GAME_ID}/img/game_logob512x512.png" / -->
+		</div>
+		
+		<span role="start-game" data-id="{GAME_ID}" class="circle-area noAlpha button-bigger animated fadeIn" style="animation-delay: 3s; width: 100px; height: 100px; margin: 0 auto; background-color: white;
+    overflow: visible; margin-top: -60px;"><span class="circle-text center noEvents" style="font-size: 1.2em; color: #0AD; top: 34px;">{L_PLAY}!</span></span>
+
+	</div>
+
+	<span role="game-version" data-id="{GAME_ID}" class="see-profile strong" style="text-align: center; position: absolute; bottom: 5px; left: 50%; width: 100vw; max-width: 720px; transform: translateX(-50%); color: #212121;"><span class="center noEvents">{L_VER} {GAME_VERSION}</span></span>
+
+
+</div>
